@@ -4,6 +4,21 @@
     "signIn": "Entrar",
     "signOut": "Sair"
   },
+  "navigation": {
+    "home": "Início",
+    "aiTools": "Ferramentas IA",
+    "learn": "Aprender"
+  },
+  "home": {
+    "title": "Descubra as Melhores Ferramentas e Cursos de IA",
+    "subtitle": "Explore nossa coleção selecionada de ferramentas de IA e recursos educacionais para aumentar sua produtividade e conhecimento",
+    "exploreTools": "Explorar Ferramentas IA",
+    "exploreCourses": "Explorar Cursos"
+  },
+  "learn": {
+    "title": "Aprender",
+    "comingSoon": "Listagem de cursos em breve..."
+  },
   "search": {
     "placeholder": "Buscar ferramentas de IA...",
     "clearFilters": "Limpar Filtros"

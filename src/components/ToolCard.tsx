@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Star, Wrench } from "lucide-react";
+import { ExternalLink, Star, Wrench, Pencil } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ToolCardProps {
   name: string;
@@ -9,9 +10,12 @@ interface ToolCardProps {
   url: string;
   logo?: string;
   isFavorite?: boolean;
+  onEdit?: () => void;
 }
 
-const ToolCard = ({ name, description, category, url, logo, isFavorite = false }: ToolCardProps) => {
+const ToolCard = ({ name, description, category, url, logo, isFavorite = false, onEdit }: ToolCardProps) => {
+  const { user } = useAuth();
+
   return (
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
       <CardHeader className="flex-none">
@@ -30,9 +34,16 @@ const ToolCard = ({ name, description, category, url, logo, isFavorite = false }
             </div>
             <CardTitle className="text-lg font-semibold">{name}</CardTitle>
           </div>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
-          </Button>
+          <div className="flex gap-2">
+            {user && (
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onEdit}>
+                <Pencil className="h-4 w-4 text-gray-400" />
+              </Button>
+            )}
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
+            </Button>
+          </div>
         </div>
         <div className="flex items-center gap-1.5">
           <Wrench className="h-4 w-4 text-gray-400" />

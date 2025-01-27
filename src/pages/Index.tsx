@@ -68,6 +68,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [tools, setTools] = useState<Tool[]>(PLACEHOLDER_TOOLS);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedTool, setSelectedTool] = useState<Tool | undefined>(undefined);
 
   const filteredTools = tools.filter((tool) => {
     const searchTerm = searchQuery.toLowerCase();
@@ -79,16 +80,40 @@ const Index = () => {
     );
   });
 
-  const handleSaveTool = (newTool: Omit<Tool, 'id'>) => {
-    const tool: Tool = {
-      ...newTool,
-      id: Date.now().toString(), // Simple ID generation for now
-    };
-    setTools([...tools, tool]);
-    toast({
-      title: "Success",
-      description: "Tool has been added successfully.",
-    });
+  const handleSaveTool = (toolData: Omit<Tool, 'id'>) => {
+    if (selectedTool) {
+      // Edit existing tool
+      setTools(tools.map(tool => 
+        tool.id === selectedTool.id 
+          ? { ...toolData, id: tool.id }
+          : tool
+      ));
+      toast({
+        title: "Success",
+        description: "Tool has been updated successfully.",
+      });
+    } else {
+      // Add new tool
+      const tool: Tool = {
+        ...toolData,
+        id: Date.now().toString(),
+      };
+      setTools([...tools, tool]);
+      toast({
+        title: "Success",
+        description: "Tool has been added successfully.",
+      });
+    }
+  };
+
+  const handleEditTool = (tool: Tool) => {
+    setSelectedTool(tool);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setSelectedTool(undefined);
+    setIsDialogOpen(false);
   };
 
   return (
@@ -128,6 +153,7 @@ const Index = () => {
                 url={tool.url}
                 logo={tool.logo}
                 isFavorite={tool.featured}
+                onEdit={() => handleEditTool(tool)}
               />
             ))}
           </div>
@@ -141,7 +167,8 @@ const Index = () => {
 
       <ToolDialog
         open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
+        onOpenChange={handleCloseDialog}
+        tool={selectedTool}
         onSave={handleSaveTool}
       />
     </main>

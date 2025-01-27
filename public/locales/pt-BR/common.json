@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "Ferramentas de IA",
+    "signIn": "Entrar",
+    "signOut": "Sair"
+  },
+  "search": {
+    "placeholder": "Buscar ferramentas de IA...",
+    "clearFilters": "Limpar Filtros"
+  },
+  "buttons": {
+    "manageCategories": "Gerenciar Categorias",
+    "addTool": "Adicionar Ferramenta",
+    "save": "Salvar",
+    "openTool": "Abrir Ferramenta"
+  },
+  "language": {
+    "en": "English",
+    "pt-BR": "Português (Brasil)"
+  }
+}

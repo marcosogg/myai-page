@@ -1,0 +1,21 @@
+{
+  "header": {
+    "title": "AI Tools",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "search": {
+    "placeholder": "Search AI tools...",
+    "clearFilters": "Clear Filters"
+  },
+  "buttons": {
+    "manageCategories": "Manage Categories",
+    "addTool": "Add Tool",
+    "save": "Save",
+    "openTool": "Open Tool"
+  },
+  "language": {
+    "en": "English",
+    "pt-BR": "Português (Brasil)"
+  }
+}

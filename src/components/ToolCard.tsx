@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink, Star, Wrench } from "lucide-react";
 
 interface ToolCardProps {
   name: string;
@@ -20,7 +20,10 @@ const ToolCard = ({ name, description, category, url, isFavorite = false }: Tool
             <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
           </Button>
         </div>
-        <p className="text-sm text-muted-foreground">{category}</p>
+        <div className="flex items-center gap-1.5">
+          <Wrench className="h-4 w-4 text-gray-400" />
+          <p className="text-sm text-muted-foreground">{category}</p>
+        </div>
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-sm text-gray-600">{description}</p>

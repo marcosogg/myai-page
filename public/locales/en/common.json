@@ -4,6 +4,21 @@
     "signIn": "Sign In",
     "signOut": "Sign Out"
   },
+  "navigation": {
+    "home": "Home",
+    "aiTools": "AI Tools",
+    "learn": "Learn"
+  },
+  "home": {
+    "title": "Discover the Best AI Tools and Courses",
+    "subtitle": "Explore our curated collection of AI tools and educational resources to enhance your productivity and knowledge",
+    "exploreTools": "Explore AI Tools",
+    "exploreCourses": "Explore Courses"
+  },
+  "learn": {
+    "title": "Learn",
+    "comingSoon": "Course listings coming soon..."
+  },
   "search": {
     "placeholder": "Search AI tools...",
     "clearFilters": "Clear Filters"

@@ -8,13 +8,13 @@ import Routes from "./Routes";
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AuthProvider>
-        <Router>
+      <Router>
+        <AuthProvider>
           <Header />
           <Routes />
           <Toaster />
-        </Router>
-      </AuthProvider>
+        </AuthProvider>
+      </Router>
     </ThemeProvider>
   );
 }

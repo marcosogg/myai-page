@@ -7,15 +7,29 @@ interface ToolCardProps {
   description: string;
   category: string;
   url: string;
+  logo?: string;
   isFavorite?: boolean;
 }
 
-const ToolCard = ({ name, description, category, url, isFavorite = false }: ToolCardProps) => {
+const ToolCard = ({ name, description, category, url, logo, isFavorite = false }: ToolCardProps) => {
   return (
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
       <CardHeader className="flex-none">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-lg font-semibold">{name}</CardTitle>
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+              {logo ? (
+                <img 
+                  src={logo} 
+                  alt={`${name} logo`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <Wrench className="h-6 w-6 text-gray-400" />
+              )}
+            </div>
+            <CardTitle className="text-lg font-semibold">{name}</CardTitle>
+          </div>
           <Button variant="ghost" size="icon" className="h-8 w-8">
             <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
           </Button>

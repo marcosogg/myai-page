@@ -6,31 +6,25 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
-
-interface Tool {
-  id: string;
-  name: string;
-  description: string;
-  category: string;
-  url: string;
-  logo?: string;
-  status: 'active' | 'inactive';
-  featured: boolean;
-}
+import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
+import { Tool } from "@/types/tool";
+import { Category } from "@/types/category";
 
 interface ToolDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   tool?: Tool;
+  categories: Category[];
   onSave: (tool: Omit<Tool, 'id'>) => void;
 }
 
-const ToolDialog = ({ open, onOpenChange, tool, onSave }: ToolDialogProps) => {
+const ToolDialog = ({ open, onOpenChange, tool, categories, onSave }: ToolDialogProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState<Omit<Tool, 'id'>>({
     name: tool?.name ?? '',
     description: tool?.description ?? '',
-    category: tool?.category ?? '',
+    categories: tool?.categories ?? [],
     url: tool?.url ?? '',
     logo: tool?.logo ?? '',
     status: tool?.status ?? 'active',
@@ -40,7 +34,7 @@ const ToolDialog = ({ open, onOpenChange, tool, onSave }: ToolDialogProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.description || !formData.category || !formData.url) {
+    if (!formData.name || !formData.description || !formData.url) {
       toast({
         title: "Missing Fields",
         description: "Please fill in all required fields.",
@@ -51,6 +45,15 @@ const ToolDialog = ({ open, onOpenChange, tool, onSave }: ToolDialogProps) => {
 
     onSave(formData);
     onOpenChange(false);
+  };
+
+  const toggleCategory = (categoryId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      categories: prev.categories.includes(categoryId)
+        ? prev.categories.filter(id => id !== categoryId)
+        : [...prev.categories, categoryId]
+    }));
   };
 
   return (
@@ -80,13 +83,24 @@ const ToolDialog = ({ open, onOpenChange, tool, onSave }: ToolDialogProps) => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="category">Category *</Label>
-              <Input
-                id="category"
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                placeholder="e.g., Text Generation"
-              />
+              <Label>Categories</Label>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                  <Badge
+                    key={category.id}
+                    variant={formData.categories.includes(category.id) ? "default" : "outline"}
+                    className="cursor-pointer"
+                    style={{
+                      backgroundColor: formData.categories.includes(category.id) ? category.color : 'transparent',
+                      borderColor: category.color,
+                      color: formData.categories.includes(category.id) ? 'white' : 'inherit',
+                    }}
+                    onClick={() => toggleCategory(category.id)}
+                  >
+                    {category.name}
+                  </Badge>
+                ))}
+              </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="url">URL *</Label>

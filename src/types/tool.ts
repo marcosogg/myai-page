@@ -2,7 +2,7 @@ export interface Tool {
   id: string;
   name: string;
   description: string;
-  category: string;
+  categories: string[];
   url: string;
   logo?: string;
   status: 'active' | 'inactive';

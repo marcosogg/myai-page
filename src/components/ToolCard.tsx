@@ -1,19 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Star, Wrench, Pencil } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { Category } from "@/types/category";
 
 interface ToolCardProps {
   name: string;
   description: string;
-  category: string;
+  categories: string[];
+  availableCategories: Category[];
   url: string;
   logo?: string;
   isFavorite?: boolean;
   onEdit?: () => void;
 }
 
-const ToolCard = ({ name, description, category, url, logo, isFavorite = false, onEdit }: ToolCardProps) => {
+const ToolCard = ({ 
+  name, 
+  description, 
+  categories, 
+  availableCategories,
+  url, 
+  logo, 
+  isFavorite = false, 
+  onEdit 
+}: ToolCardProps) => {
   const { user } = useAuth();
 
   return (
@@ -45,9 +57,22 @@ const ToolCard = ({ name, description, category, url, logo, isFavorite = false, 
             </Button>
           </div>
         </div>
-        <div className="flex items-center gap-1.5">
-          <Wrench className="h-4 w-4 text-gray-400" />
-          <p className="text-sm text-muted-foreground">{category}</p>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {categories.map((categoryId) => {
+            const category = availableCategories.find(c => c.id === categoryId);
+            if (!category) return null;
+            return (
+              <Badge
+                key={category.id}
+                style={{
+                  backgroundColor: category.color,
+                  color: 'white',
+                }}
+              >
+                {category.name}
+              </Badge>
+            );
+          })}
         </div>
       </CardHeader>
       <CardContent className="flex-grow">

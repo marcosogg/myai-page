@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { Tool } from "@/types/tool";
+import { Category } from "@/types/category";
 import { useToast } from "@/components/ui/use-toast";
 import { PLACEHOLDER_TOOLS } from "@/data/mockTools";
+import { PLACEHOLDER_CATEGORIES } from "@/data/mockCategories";
 
 export const useTools = () => {
   const { toast } = useToast();
   const [tools, setTools] = useState<Tool[]>(PLACEHOLDER_TOOLS);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>(PLACEHOLDER_CATEGORIES);
+  const [isToolDialogOpen, setIsToolDialogOpen] = useState(false);
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState<Tool | undefined>(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
 
   const filteredTools = tools.filter((tool) => {
     const searchTerm = searchQuery.toLowerCase();
-    return (
+    const matchesSearch = 
       tool.status === 'active' &&
       (tool.name.toLowerCase().includes(searchTerm) ||
-        tool.description.toLowerCase().includes(searchTerm) ||
-        tool.category.toLowerCase().includes(searchTerm))
-    );
+        tool.description.toLowerCase().includes(searchTerm));
+    
+    const matchesCategories = 
+      selectedCategoryIds.length === 0 || 
+      tool.categories.some(catId => selectedCategoryIds.includes(catId));
+
+    return matchesSearch && matchesCategories;
   });
 
   const handleSaveTool = (toolData: Omit<Tool, 'id'>) => {
@@ -46,24 +56,76 @@ export const useTools = () => {
     }
   };
 
-  const handleEditTool = (tool: Tool) => {
-    setSelectedTool(tool);
-    setIsDialogOpen(true);
+  const handleSaveCategory = (categoryData: Omit<Category, 'id'>) => {
+    if (selectedCategory) {
+      // Edit existing category
+      setCategories(categories.map(category => 
+        category.id === selectedCategory.id 
+          ? { ...categoryData, id: category.id }
+          : category
+      ));
+      toast({
+        title: "Success",
+        description: "Category has been updated successfully.",
+      });
+    } else {
+      // Add new category
+      const category: Category = {
+        ...categoryData,
+        id: Date.now().toString(),
+      };
+      setCategories([...categories, category]);
+      toast({
+        title: "Success",
+        description: "Category has been added successfully.",
+      });
+    }
   };
 
-  const handleCloseDialog = () => {
+  const handleEditTool = (tool: Tool) => {
+    setSelectedTool(tool);
+    setIsToolDialogOpen(true);
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setSelectedCategory(category);
+    setIsCategoryDialogOpen(true);
+  };
+
+  const handleCloseToolDialog = () => {
     setSelectedTool(undefined);
-    setIsDialogOpen(false);
+    setIsToolDialogOpen(false);
+  };
+
+  const handleCloseCategoryDialog = () => {
+    setSelectedCategory(undefined);
+    setIsCategoryDialogOpen(false);
+  };
+
+  const toggleCategoryFilter = (categoryId: string) => {
+    setSelectedCategoryIds(prev => 
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
   };
 
   return {
     tools: filteredTools,
-    isDialogOpen,
+    categories,
+    isToolDialogOpen,
+    isCategoryDialogOpen,
     selectedTool,
+    selectedCategory,
     searchQuery,
+    selectedCategoryIds,
     setSearchQuery,
     handleSaveTool,
+    handleSaveCategory,
     handleEditTool,
-    handleCloseDialog,
+    handleEditCategory,
+    handleCloseToolDialog,
+    handleCloseCategoryDialog,
+    toggleCategoryFilter,
   };
 };

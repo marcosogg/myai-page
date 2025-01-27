@@ -5,9 +5,10 @@ import CategoryDialog from "../components/CategoryDialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, Tag } from "lucide-react";
+import { Search, Plus, Tag, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTools } from "@/hooks/useTools";
+import { toast } from "@/components/ui/use-toast";
 
 const Index = () => {
   const { user } = useAuth();
@@ -28,7 +29,16 @@ const Index = () => {
     handleCloseToolDialog,
     handleCloseCategoryDialog,
     toggleCategoryFilter,
+    setSelectedCategoryIds,
   } = useTools();
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategoryIds([]);
+    toast({
+      description: "All filters have been cleared",
+    });
+  };
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -46,31 +56,43 @@ const Index = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            {user && (
-              <div className="flex gap-2">
+            <div className="flex gap-2">
+              {(selectedCategoryIds.length > 0 || searchQuery) && (
                 <Button
-                  onClick={() => handleEditCategory({ id: '', name: '', color: '#000000' })}
                   variant="outline"
+                  onClick={clearFilters}
+                  className="gap-2"
                 >
-                  <Tag className="mr-2 h-4 w-4" />
-                  Manage Categories
+                  <X className="h-4 w-4" />
+                  Clear Filters
                 </Button>
-                <Button
-                  onClick={() => handleEditTool({ 
-                    id: '', 
-                    name: '', 
-                    description: '', 
-                    categories: [], 
-                    url: '', 
-                    status: 'active', 
-                    featured: false 
-                  })}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add Tool
-                </Button>
-              </div>
-            )}
+              )}
+              {user && (
+                <>
+                  <Button
+                    onClick={() => handleEditCategory({ id: '', name: '', color: '#000000' })}
+                    variant="outline"
+                  >
+                    <Tag className="mr-2 h-4 w-4" />
+                    Manage Categories
+                  </Button>
+                  <Button
+                    onClick={() => handleEditTool({ 
+                      id: '', 
+                      name: '', 
+                      description: '', 
+                      categories: [], 
+                      url: '', 
+                      status: 'active', 
+                      featured: false 
+                    })}
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Tool
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -78,7 +100,7 @@ const Index = () => {
               <Badge
                 key={category.id}
                 variant={selectedCategoryIds.includes(category.id) ? "default" : "outline"}
-                className="cursor-pointer"
+                className="cursor-pointer transition-colors"
                 style={{
                   backgroundColor: selectedCategoryIds.includes(category.id) ? category.color : 'transparent',
                   borderColor: category.color,
@@ -108,7 +130,7 @@ const Index = () => {
           </div>
           {tools.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-gray-500">No tools found matching your search.</p>
+              <p className="text-gray-500">No tools found matching your search criteria.</p>
             </div>
           )}
         </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 
 const Home = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
   return (
     <main className="min-h-screen bg-gray-50">

@@ -7,12 +7,12 @@ i18n
   .use(initReactI18next)
   .init({
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: '/public/locales/{{lng}}/{{ns}}.json',
     },
     fallbackLng: 'en',
     supportedLngs: ['en', 'pt-BR'],
     defaultNS: 'common',
-    ns: ['common', 'tools'],
+    ns: ['common'],
     interpolation: {
       escapeValue: false,
     },

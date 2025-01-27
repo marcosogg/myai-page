@@ -1,47 +1,22 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import Home from "./pages/Home";
-import AITools from "./pages/AITools";
-import Learn from "./pages/Learn";
-import Auth from "./pages/Auth";
-import NotFound from "./pages/NotFound";
-import "./i18n";
-import { useEffect } from "react";
-import i18next from "i18next";
+import { AuthProvider } from "@/contexts/AuthContext";
+import Header from "@/components/Header";
+import Routes from "@/Routes";
 
-const queryClient = new QueryClient();
-
-const App = () => {
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('preferredLanguage');
-    if (savedLanguage) {
-      i18next.changeLanguage(savedLanguage);
-    }
-  }, []);
-
+function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/ai-tools" element={<AITools />} />
-              <Route path="/learn" element={<Learn />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AuthProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Routes />
+          <Toaster />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
-};
+}
 
 export default App;

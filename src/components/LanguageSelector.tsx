@@ -7,13 +7,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { toast } from "@/components/ui/use-toast";
 
 const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    localStorage.setItem('preferredLanguage', lng);
+  const changeLanguage = async (lng: string) => {
+    try {
+      await i18n.changeLanguage(lng);
+      localStorage.setItem('preferredLanguage', lng);
+      toast({
+        description: "Language changed successfully",
+      });
+    } catch (error) {
+      console.error('Error changing language:', error);
+      toast({
+        variant: "destructive",
+        description: "Failed to change language",
+      });
+    }
   };
 
   return (

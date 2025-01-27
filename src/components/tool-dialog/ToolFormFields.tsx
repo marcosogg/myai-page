@@ -1,12 +1,9 @@
 import { Tool } from "@/types/tool";
 import { Category } from "@/types/category";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Check, X } from "lucide-react";
+import BasicInfoFields from "./form-fields/BasicInfoFields";
+import CategorySelector from "./form-fields/CategorySelector";
+import UrlFields from "./form-fields/UrlFields";
+import ToggleFields from "./form-fields/ToggleFields";
 
 interface ToolFormFieldsProps {
   formData: Omit<Tool, 'id'>;
@@ -26,107 +23,26 @@ const ToolFormFields = ({
 }: ToolFormFieldsProps) => {
   return (
     <div className="grid gap-4 py-4">
-      <div className="grid gap-2">
-        <Label htmlFor="name">Name *</Label>
-        <Input
-          id="name"
-          value={formData.name}
-          onChange={(e) => onUpdateField("name", e.target.value)}
-          placeholder="Tool name"
-        />
-      </div>
+      <BasicInfoFields 
+        formData={formData} 
+        onUpdateField={onUpdateField} 
+      />
       
-      <div className="grid gap-2">
-        <Label htmlFor="description">Description *</Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => onUpdateField("description", e.target.value)}
-          placeholder="Tool description"
-        />
-      </div>
+      <CategorySelector
+        categories={categories}
+        selectedCategories={formData.categories}
+        onToggleCategory={onToggleCategory}
+      />
       
-      <div className="grid gap-2">
-        <Label>Categories</Label>
-        <ScrollArea className="h-[120px] w-full rounded-md border p-4">
-          <div className="grid grid-cols-2 gap-2">
-            {categories.map((category) => {
-              const isSelected = formData.categories.includes(category.id);
-              return (
-                <Badge
-                  key={category.id}
-                  variant={isSelected ? "default" : "outline"}
-                  className="cursor-pointer flex items-center justify-between gap-2 py-2"
-                  style={{
-                    backgroundColor: isSelected ? category.color : 'transparent',
-                    borderColor: category.color,
-                    color: isSelected ? 'white' : 'inherit',
-                  }}
-                  onClick={() => onToggleCategory(category.id)}
-                >
-                  <span className="truncate">{category.name}</span>
-                  {isSelected ? (
-                    <X className="h-3 w-3 shrink-0" />
-                  ) : (
-                    <Check className="h-3 w-3 shrink-0" />
-                  )}
-                </Badge>
-              );
-            })}
-          </div>
-        </ScrollArea>
-      </div>
+      <UrlFields 
+        formData={formData} 
+        onUpdateField={onUpdateField} 
+      />
       
-      <div className="grid gap-2">
-        <Label htmlFor="url">URL *</Label>
-        <Input
-          id="url"
-          type="url"
-          value={formData.url}
-          onChange={(e) => onUpdateField("url", e.target.value)}
-          placeholder="https://example.com"
-        />
-      </div>
-      
-      <div className="grid gap-2">
-        <Label htmlFor="logo">Logo URL</Label>
-        <Input
-          id="logo"
-          value={formData.logo}
-          onChange={(e) => onUpdateField("logo", e.target.value)}
-          placeholder="https://example.com/logo.png"
-        />
-      </div>
-      
-      <div className="flex items-center justify-between">
-        <div className="space-y-0.5">
-          <Label>Status</Label>
-          <div className="text-sm text-muted-foreground">
-            Tool will be {formData.status === 'active' ? 'visible' : 'hidden'}
-          </div>
-        </div>
-        <Switch
-          checked={formData.status === 'active'}
-          onCheckedChange={(checked) =>
-            onUpdateField("status", checked ? 'active' : 'inactive')
-          }
-        />
-      </div>
-      
-      <div className="flex items-center justify-between">
-        <div className="space-y-0.5">
-          <Label>Featured</Label>
-          <div className="text-sm text-muted-foreground">
-            Show tool in featured section
-          </div>
-        </div>
-        <Switch
-          checked={formData.featured}
-          onCheckedChange={(checked) =>
-            onUpdateField("featured", checked)
-          }
-        />
-      </div>
+      <ToggleFields 
+        formData={formData} 
+        onUpdateField={onUpdateField} 
+      />
     </div>
   );
 };

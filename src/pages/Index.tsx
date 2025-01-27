@@ -11,7 +11,7 @@ import { useTools } from "@/hooks/useTools";
 import { toast } from "@/components/ui/use-toast";
 
 const Index = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const {
     tools,
     categories,
@@ -67,7 +67,7 @@ const Index = () => {
                   Clear Filters
                 </Button>
               )}
-              {user && (
+              {user && isAdmin() && (
                 <>
                   <Button
                     onClick={() => handleEditCategory({ id: '', name: '', color: '#000000' })}
@@ -124,7 +124,7 @@ const Index = () => {
                 url={tool.url}
                 logo={tool.logo}
                 isFavorite={tool.featured}
-                onEdit={() => handleEditTool(tool)}
+                onEdit={isAdmin() ? () => handleEditTool(tool) : undefined}
               />
             ))}
           </div>
@@ -136,20 +136,24 @@ const Index = () => {
         </div>
       </div>
 
-      <ToolDialog
-        open={isToolDialogOpen}
-        onOpenChange={handleCloseToolDialog}
-        tool={selectedTool}
-        categories={categories}
-        onSave={handleSaveTool}
-      />
+      {isAdmin() && (
+        <>
+          <ToolDialog
+            open={isToolDialogOpen}
+            onOpenChange={handleCloseToolDialog}
+            tool={selectedTool}
+            categories={categories}
+            onSave={handleSaveTool}
+          />
 
-      <CategoryDialog
-        open={isCategoryDialogOpen}
-        onOpenChange={handleCloseCategoryDialog}
-        category={selectedCategory}
-        onSave={handleSaveCategory}
-      />
+          <CategoryDialog
+            open={isCategoryDialogOpen}
+            onOpenChange={handleCloseCategoryDialog}
+            category={selectedCategory}
+            onSave={handleSaveCategory}
+          />
+        </>
+      )}
     </main>
   );
 };

@@ -26,7 +26,7 @@ const ToolCard = ({
   isFavorite = false, 
   onEdit 
 }: ToolCardProps) => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   return (
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
@@ -47,14 +47,16 @@ const ToolCard = ({
             <CardTitle className="text-lg font-semibold">{name}</CardTitle>
           </div>
           <div className="flex gap-2">
-            {user && (
+            {user && isAdmin() && onEdit && (
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onEdit}>
                 <Pencil className="h-4 w-4 text-gray-400" />
               </Button>
             )}
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
-            </Button>
+            {isAdmin() && (
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
+              </Button>
+            )}
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">

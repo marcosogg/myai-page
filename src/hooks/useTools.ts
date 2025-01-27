@@ -50,6 +50,7 @@ export const useTools = () => {
     searchQuery,
     selectedCategoryIds,
     setSearchQuery,
+    setSelectedCategoryIds,  // Added this line
     handleSaveTool,
     handleSaveCategory,
     handleEditTool,

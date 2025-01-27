@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Check, X } from "lucide-react";
 
 interface ToolFormFieldsProps {
   formData: Omit<Tool, 'id'>;
@@ -33,6 +35,7 @@ const ToolFormFields = ({
           placeholder="Tool name"
         />
       </div>
+      
       <div className="grid gap-2">
         <Label htmlFor="description">Description *</Label>
         <Textarea
@@ -42,26 +45,38 @@ const ToolFormFields = ({
           placeholder="Tool description"
         />
       </div>
+      
       <div className="grid gap-2">
         <Label>Categories</Label>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <Badge
-              key={category.id}
-              variant={formData.categories.includes(category.id) ? "default" : "outline"}
-              className="cursor-pointer"
-              style={{
-                backgroundColor: formData.categories.includes(category.id) ? category.color : 'transparent',
-                borderColor: category.color,
-                color: formData.categories.includes(category.id) ? 'white' : 'inherit',
-              }}
-              onClick={() => onToggleCategory(category.id)}
-            >
-              {category.name}
-            </Badge>
-          ))}
-        </div>
+        <ScrollArea className="h-[120px] w-full rounded-md border p-4">
+          <div className="grid grid-cols-2 gap-2">
+            {categories.map((category) => {
+              const isSelected = formData.categories.includes(category.id);
+              return (
+                <Badge
+                  key={category.id}
+                  variant={isSelected ? "default" : "outline"}
+                  className="cursor-pointer flex items-center justify-between gap-2 py-2"
+                  style={{
+                    backgroundColor: isSelected ? category.color : 'transparent',
+                    borderColor: category.color,
+                    color: isSelected ? 'white' : 'inherit',
+                  }}
+                  onClick={() => onToggleCategory(category.id)}
+                >
+                  <span className="truncate">{category.name}</span>
+                  {isSelected ? (
+                    <X className="h-3 w-3 shrink-0" />
+                  ) : (
+                    <Check className="h-3 w-3 shrink-0" />
+                  )}
+                </Badge>
+              );
+            })}
+          </div>
+        </ScrollArea>
       </div>
+      
       <div className="grid gap-2">
         <Label htmlFor="url">URL *</Label>
         <Input
@@ -72,6 +87,7 @@ const ToolFormFields = ({
           placeholder="https://example.com"
         />
       </div>
+      
       <div className="grid gap-2">
         <Label htmlFor="logo">Logo URL</Label>
         <Input
@@ -81,6 +97,7 @@ const ToolFormFields = ({
           placeholder="https://example.com/logo.png"
         />
       </div>
+      
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <Label>Status</Label>
@@ -95,6 +112,7 @@ const ToolFormFields = ({
           }
         />
       </div>
+      
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <Label>Featured</Label>

@@ -10,14 +10,18 @@ export const initI18n = () => {
       backend: {
         loadPath: '/locales/{{lng}}/{{ns}}.json',
       },
-      fallbackLng: 'en',
+      fallbackLng: {
+        'pt': ['pt-BR', 'en'],
+        'default': ['en']
+      },
       supportedLngs: ['en', 'pt-BR'],
       defaultNS: 'common',
       ns: ['common'],
       interpolation: {
         escapeValue: false,
       },
-      debug: true,
+      load: 'currentOnly', // This prevents loading partial locales like 'pt'
+      debug: process.env.NODE_ENV === 'development',
     });
 };
 

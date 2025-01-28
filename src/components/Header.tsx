@@ -68,7 +68,7 @@ const Header = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="ghost" 
-                    className="flex items-center gap-2 cursor-pointer text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
+                    className="flex items-center gap-2 cursor-pointer"
                   >
                     <span className="text-sm font-medium">
                       {user.email?.split('@')[0]}

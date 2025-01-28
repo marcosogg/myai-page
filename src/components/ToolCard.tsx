@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Star, Wrench, Pencil } from "lucide-react";
+import { ExternalLink, Star, Wrench, PencilLine } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Category } from "@/types/category";
 
@@ -49,14 +49,23 @@ const ToolCard = ({
             <CardTitle className="text-lg font-semibold">{name}</CardTitle>
           </div>
           <div className="flex gap-2">
-            {user && isAdmin() && onEdit && (
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onEdit}>
-                <Pencil className="h-4 w-4 text-gray-400" />
+            {user && isAdmin && onEdit && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800" 
+                onClick={onEdit}
+              >
+                <PencilLine className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </Button>
             )}
             {isAdmin() && (
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-400'}`} />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <Star className={`h-5 w-5 ${isFavorite ? 'fill-yellow-400 text-yellow-400' : 'text-gray-500 dark:text-gray-400'}`} />
               </Button>
             )}
           </div>
@@ -80,7 +89,7 @@ const ToolCard = ({
         </div>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-sm text-gray-600">{description}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{description}</p>
       </CardContent>
       <CardFooter className="flex-none">
         <Button asChild className="w-full gap-2">

@@ -19,7 +19,7 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="h-8 w-8"
+      className="h-8 w-8 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
     >
       {theme === "dark" ? (
         <Sun className="h-4 w-4" />

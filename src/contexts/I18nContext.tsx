@@ -20,12 +20,8 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
         const storedLanguage = localStorage.getItem('preferredLanguage');
         await initI18n();
         
-        if (storedLanguage) {
-          // Map 'pt' to 'pt-BR' if needed
-          const normalizedLanguage = storedLanguage === 'pt' ? 'pt-BR' : storedLanguage;
-          if (['en', 'pt-BR'].includes(normalizedLanguage)) {
-            await i18n.changeLanguage(normalizedLanguage);
-          }
+        if (storedLanguage && ['en', 'pt-BR'].includes(storedLanguage)) {
+          await i18n.changeLanguage(storedLanguage);
         }
       } catch (error) {
         console.error('Failed to initialize i18n:', error);
@@ -43,10 +39,8 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   const changeLanguage = async (lng: string) => {
     try {
-      // Map 'pt' to 'pt-BR' if needed
-      const normalizedLanguage = lng === 'pt' ? 'pt-BR' : lng;
-      await i18n.changeLanguage(normalizedLanguage);
-      localStorage.setItem('preferredLanguage', normalizedLanguage);
+      await i18n.changeLanguage(lng);
+      localStorage.setItem('preferredLanguage', lng);
       toast({
         description: "Language changed successfully",
       });

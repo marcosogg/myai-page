@@ -54,12 +54,12 @@ const ToolCard = ({
                 variant="ghost" 
                 size="icon" 
                 className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800" 
-                onClick={onEdit}
+                onClick={() => onEdit()}
               >
                 <PencilLine className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </Button>
             )}
-            {isAdmin() && (
+            {isAdmin && (
               <Button 
                 variant="ghost" 
                 size="icon" 

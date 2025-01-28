@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Tool } from "@/types/tool";
 import { Category } from "@/types/category";
 import { Label } from "@/components/ui/label";
@@ -16,9 +17,11 @@ const CategorySelector = ({
   selectedCategories, 
   onToggleCategory 
 }: CategorySelectorProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="grid gap-2">
-      <Label>Categories</Label>
+      <Label>{t("tools.form.categories")}</Label>
       <ScrollArea className="h-[120px] w-full rounded-md border p-4">
         <div className="grid grid-cols-2 gap-2">
           {categories.map((category) => {

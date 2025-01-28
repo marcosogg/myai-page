@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Tool } from "@/types/tool";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -11,13 +12,15 @@ interface ToggleFieldsProps {
 }
 
 const ToggleFields = ({ formData, onUpdateField }: ToggleFieldsProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>Status</Label>
+          <Label>{t("tools.form.status")}</Label>
           <div className="text-sm text-muted-foreground">
-            Tool will be {formData.status === 'active' ? 'visible' : 'hidden'}
+            {formData.status === 'active' ? t("tools.form.active") : t("tools.form.inactive")}
           </div>
         </div>
         <Switch
@@ -30,9 +33,9 @@ const ToggleFields = ({ formData, onUpdateField }: ToggleFieldsProps) => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <Label>Featured</Label>
+          <Label>{t("tools.form.featured")}</Label>
           <div className="text-sm text-muted-foreground">
-            Show tool in featured section
+            {t("tools.form.featured")}
           </div>
         </div>
         <Switch

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ interface CategoryDialogProps {
 }
 
 const CategoryDialog = ({ open, onOpenChange, category, onSave }: CategoryDialogProps) => {
+  const { t } = useTranslation();
   const { toast } = useToast();
   const [formData, setFormData] = useState<Omit<Category, 'id'>>({
     name: category?.name ?? '',
@@ -25,8 +27,8 @@ const CategoryDialog = ({ open, onOpenChange, category, onSave }: CategoryDialog
     
     if (!formData.name) {
       toast({
-        title: "Missing Fields",
-        description: "Please fill in all required fields.",
+        title: t("tools.form.required"),
+        description: t("tools.form.required"),
         variant: "destructive",
       });
       return;
@@ -41,20 +43,22 @@ const CategoryDialog = ({ open, onOpenChange, category, onSave }: CategoryDialog
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{category ? 'Edit Category' : 'Add New Category'}</DialogTitle>
+            <DialogTitle>
+              {category ? t("categories.editCategory") : t("categories.addCategory")}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">Name *</Label>
+              <Label htmlFor="name">{t("categories.name")} *</Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Category name"
+                placeholder={t("categories.name")}
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="color">Color</Label>
+              <Label htmlFor="color">{t("categories.color")}</Label>
               <div className="flex gap-2">
                 <Input
                   id="color"
@@ -72,7 +76,7 @@ const CategoryDialog = ({ open, onOpenChange, category, onSave }: CategoryDialog
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t("tools.form.save")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

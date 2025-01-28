@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Tool } from "@/types/tool";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -11,10 +12,12 @@ interface UrlFieldsProps {
 }
 
 const UrlFields = ({ formData, onUpdateField }: UrlFieldsProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="grid gap-2">
-        <Label htmlFor="url">URL *</Label>
+        <Label htmlFor="url">{t("tools.form.url")} *</Label>
         <Input
           id="url"
           type="url"
@@ -25,7 +28,7 @@ const UrlFields = ({ formData, onUpdateField }: UrlFieldsProps) => {
       </div>
       
       <div className="grid gap-2">
-        <Label htmlFor="logo">Logo URL</Label>
+        <Label htmlFor="logo">{t("tools.form.logoUrl")}</Label>
         <Input
           id="logo"
           value={formData.logo}

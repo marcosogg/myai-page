@@ -30,13 +30,15 @@ const ToolCard = ({
   const { t } = useTranslation();
   const { user, isAdmin } = useAuth();
 
-  const handleEdit = (e: React.MouseEvent) => {
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
     if (onEdit) {
       onEdit();
     }
   };
+
+  const isUserAdmin = isAdmin();
 
   return (
     <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
@@ -59,17 +61,18 @@ const ToolCard = ({
             </CardTitle>
           </div>
           <div className="flex gap-2">
-            {user && isAdmin() && onEdit && (
+            {user && isUserAdmin && onEdit && (
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800" 
+                className="h-8 w-8 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer" 
                 onClick={handleEdit}
+                type="button"
               >
                 <PencilLine className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </Button>
             )}
-            {isAdmin() && (
+            {isUserAdmin && (
               <Button 
                 variant="ghost" 
                 size="icon" 

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tool } from "@/types/tool";
@@ -14,6 +15,7 @@ interface ToolDialogProps {
 }
 
 const ToolDialog = ({ open, onOpenChange, tool, categories, onSave }: ToolDialogProps) => {
+  const { t } = useTranslation();
   const {
     formData,
     handleSubmit,
@@ -30,7 +32,9 @@ const ToolDialog = ({ open, onOpenChange, tool, categories, onSave }: ToolDialog
       <DialogContent className="sm:max-w-[500px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{tool ? 'Edit Tool' : 'Add New Tool'}</DialogTitle>
+            <DialogTitle>
+              {tool ? t("tools.editTool") : t("tools.addTool")}
+            </DialogTitle>
           </DialogHeader>
           
           <ToolFormFields
@@ -41,7 +45,7 @@ const ToolDialog = ({ open, onOpenChange, tool, categories, onSave }: ToolDialog
           />
 
           <DialogFooter>
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t("tools.form.save")}</Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -21,13 +21,33 @@
   },
   "search": {
     "placeholder": "Search AI tools...",
-    "clearFilters": "Clear Filters"
+    "clearFilters": "Clear Filters",
+    "noResults": "No tools found matching your search criteria."
   },
-  "buttons": {
-    "manageCategories": "Manage Categories",
+  "tools": {
     "addTool": "Add Tool",
-    "save": "Save",
-    "openTool": "Open Tool"
+    "editTool": "Edit Tool",
+    "manageCategories": "Manage Categories",
+    "openTool": "Open Tool",
+    "form": {
+      "name": "Name",
+      "description": "Description",
+      "categories": "Categories",
+      "url": "URL",
+      "logoUrl": "Logo URL",
+      "status": "Status",
+      "featured": "Featured",
+      "active": "Active",
+      "inactive": "Inactive",
+      "save": "Save",
+      "required": "Required field"
+    }
+  },
+  "categories": {
+    "addCategory": "Add Category",
+    "editCategory": "Edit Category",
+    "name": "Name",
+    "color": "Color"
   },
   "language": {
     "en": "English",

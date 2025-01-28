@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useTools } from "@/hooks/useTools";
 import ToolCard from "@/components/ToolCard";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { Search, Plus, Tag, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const AITools = () => {
+  const { t } = useTranslation();
   const { user, isAdmin } = useAuth();
   const {
     tools,
@@ -33,7 +35,7 @@ const AITools = () => {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
             <Input
               type="search"
-              placeholder="Search AI tools..."
+              placeholder={t("search.placeholder")}
               className="pl-10"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -47,7 +49,7 @@ const AITools = () => {
                 className="gap-2"
               >
                 <X className="h-4 w-4" />
-                Clear Filters
+                {t("search.clearFilters")}
               </Button>
             )}
             {user && isAdmin() && (
@@ -57,7 +59,7 @@ const AITools = () => {
                   variant="outline"
                 >
                   <Tag className="mr-2 h-4 w-4" />
-                  Manage Categories
+                  {t("tools.manageCategories")}
                 </Button>
                 <Button
                   onClick={() => handleEditTool({ 
@@ -71,7 +73,7 @@ const AITools = () => {
                   })}
                 >
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Tool
+                  {t("tools.addTool")}
                 </Button>
               </>
             )}
@@ -113,7 +115,7 @@ const AITools = () => {
         </div>
         {tools.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-gray-500">No tools found matching your search criteria.</p>
+            <p className="text-gray-500">{t("search.noResults")}</p>
           </div>
         )}
       </div>

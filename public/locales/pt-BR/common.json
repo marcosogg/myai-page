@@ -21,13 +21,33 @@
   },
   "search": {
     "placeholder": "Buscar ferramentas de IA...",
-    "clearFilters": "Limpar Filtros"
+    "clearFilters": "Limpar Filtros",
+    "noResults": "Nenhuma ferramenta encontrada com os critérios de busca."
   },
-  "buttons": {
-    "manageCategories": "Gerenciar Categorias",
+  "tools": {
     "addTool": "Adicionar Ferramenta",
-    "save": "Salvar",
-    "openTool": "Abrir Ferramenta"
+    "editTool": "Editar Ferramenta",
+    "manageCategories": "Gerenciar Categorias",
+    "openTool": "Abrir Ferramenta",
+    "form": {
+      "name": "Nome",
+      "description": "Descrição",
+      "categories": "Categorias",
+      "url": "URL",
+      "logoUrl": "URL do Logo",
+      "status": "Status",
+      "featured": "Destacado",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "save": "Salvar",
+      "required": "Campo obrigatório"
+    }
+  },
+  "categories": {
+    "addCategory": "Adicionar Categoria",
+    "editCategory": "Editar Categoria",
+    "name": "Nome",
+    "color": "Cor"
   },
   "language": {
     "en": "English",

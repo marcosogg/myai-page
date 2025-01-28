@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +27,7 @@ const ToolCard = ({
   isFavorite = false, 
   onEdit 
 }: ToolCardProps) => {
+  const { t } = useTranslation();
   const { user, isAdmin } = useAuth();
 
   return (
@@ -83,7 +85,7 @@ const ToolCard = ({
       <CardFooter className="flex-none">
         <Button asChild className="w-full gap-2">
           <a href={url} target="_blank" rel="noopener noreferrer">
-            Open Tool
+            {t("tools.openTool")}
             <ExternalLink className="h-4 w-4" />
           </a>
         </Button>
